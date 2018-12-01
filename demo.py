@@ -1,11 +1,17 @@
 from sklearn import tree
+from sklearn.neural_network import MLPClassifier 
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score
 
-clf = tree.DecisionTreeClassifier()
+
 
 # CHALLENGE - create 3 more classifiers...
-# 1
-# 2
-# 3
+classfiers = {
+ 'decisionTree':tree.DecisionTreeClassifier(),
+ 'mlp':MLPClassifier(),
+ 'randomForest':RandomForestClassifier(),
+}
+
 
 # [height, weight, shoe_size]
 X = [[181, 80, 44], [177, 70, 43], [160, 60, 38], [154, 54, 37], [166, 65, 40],
@@ -17,10 +23,9 @@ Y = ['male', 'male', 'female', 'female', 'male', 'male', 'female', 'female',
 
 
 # CHALLENGE - ...and train them on our data
-clf = clf.fit(X, Y)
+for name, clf in classfiers.iteritems():
+     clf.fit(X,Y)
 
-prediction = clf.predict([[190, 70, 43]])
-
-# CHALLENGE compare their reusults and print the best one!
-
-print(prediction)
+for name, clf in classfiers.iteritems():
+     result = clf.predict([[190, 70, 43]])
+     print(name, result[0], accuracy_score(['male'],result))
