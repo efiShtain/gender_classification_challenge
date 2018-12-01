@@ -3,6 +3,7 @@ from sklearn.neural_network import MLPClassifier
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score
 
+import numpy as np
 
 
 # CHALLENGE - create 3 more classifiers...
@@ -23,9 +24,21 @@ Y = ['male', 'male', 'female', 'female', 'male', 'male', 'female', 'female',
 
 
 # CHALLENGE - ...and train them on our data
-for name, clf in classfiers.iteritems():
+for name, clf in classfiers.items():
      clf.fit(X,Y)
 
-for name, clf in classfiers.iteritems():
+
+currentMaxAccuracy = 0
+mostAccurateClassifier = ''
+for name, clf in classfiers.items():
      result = clf.predict([[190, 70, 43]])
-     print(name, result[0], accuracy_score(['male'],result))
+     resultOrigin = clf.predict(X)
+     accuracy = accuracy_score(Y,resultOrigin)
+     if(accuracy>currentMaxAccuracy):
+          currentMaxAccuracy = accuracy
+          mostAccurateClassifier = name
+     
+     print(name, result[0])
+
+print('most accurate classifier:' ,mostAccurateClassifier,currentMaxAccuracy)
+
